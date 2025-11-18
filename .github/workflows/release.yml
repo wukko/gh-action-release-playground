@@ -1,0 +1,30 @@
+name: Test Release (not draft)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create fake files
+        run: |
+          echo "File 1" > 1.txt
+          echo "File 2" > 2.txt
+          echo "File 3" > 3.txt
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: test-release-${{ github.run_number }}
+          name: "Test Release ${{ github.run_number }}"
+          files: |
+            1.txt
+            2.txt
+            3.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
