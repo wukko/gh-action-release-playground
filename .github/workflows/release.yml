@@ -2,6 +2,12 @@ name: Test Release (not draft)
 
 on:
   workflow_dispatch:
+    inputs:
+      do-release:
+        required: false
+        type: boolean
+        description: "Create a release"
+        default: false
 
 permissions:
   contents: write
@@ -9,6 +15,7 @@ permissions:
 jobs:
   test-release:
     runs-on: ubuntu-latest
+    if: ${{ inputs.do-release }}
 
     steps:
       - name: Checkout
